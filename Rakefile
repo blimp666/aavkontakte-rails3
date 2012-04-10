@@ -12,12 +12,12 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "aavkontakte"
-  gem.rubyforge_project = "aavkontakte"
-  gem.homepage = "http://github.com/route/aavkontakte"
+  gem.name = "aavkontakte-rails3"
+  gem.rubyforge_project = "aavkontakte-rails3"
+  gem.homepage = "http://github.com/blimp666/aavkontakte-rails3"
   gem.license = "MIT"
   gem.summary = %Q{Yet Another Authlogic Vkontakte Authorization}
-  gem.description = %Q{Vkontakte authorization for authlogic}
+  gem.description = %Q{Vkontakte authorization for authlogic with ruby 1.9 and rails 3.0}
   gem.email = "mydeeptown@gmail.com"
   gem.authors = ["Dmitry Vorotilin"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,

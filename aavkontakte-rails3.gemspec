@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{aavkontakte}
+  s.name = %q{aavkontakte-rails3}
   s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "aavkontakte.gemspec",
+    "aavkontakte-rails3.gemspec",
     "init.rb",
     "lib/aavkontakte.rb",
     "lib/vkontakte.js",
@@ -32,12 +32,12 @@ Gem::Specification.new do |s|
     "lib/vkontakte/helper.rb",
     "lib/vkontakte/session.rb"
   ]
-  s.homepage = %q{http://github.com/route/aavkontakte}
+  s.homepage = %q{http://github.com/blimp666/aavkontakte-rails3}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{aavkontakte}
+  s.rubyforge_project = %q{aavkontakte-rails3}
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Yet Another Authlogic Vkontakte Authorization}
+  s.summary = %q{Yet Another Authlogic Vkontakte Authorization for Rails3}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

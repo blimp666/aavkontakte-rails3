@@ -1,19 +1,19 @@
-= aavkontakte
+= aavkontakte-rails3
 
-This is aavkontakte - yet another authlogic vkontakte authorization gem. It provides vkontakte authorization to authlogic.
+This is aavkontakte-rails3 - yet another authlogic vkontakte authorization gem. It provides vkontakte authorization to authlogic.
 This gem is tested with authlogic and authlogic-rpx on my project. Please report me about bugs.
 Vkontakte uses domain protection for url address of your site. But I noticed that:
 http://your-really-domain:3000 after closing popup window is works too. You must add your domain in /etc/hosts
 
 == Install
 
-gem install aavkontakte
+gem install aavkontakte-rails3
 
 * Environment
 
 In environment.rb:
 
-  config.gem 'aavkontakte'
+  config.gem 'aavkontakte-rails3'
 
 * User model
 
@@ -23,9 +23,9 @@ Add following line:
     c.vkontakte_enabled = { :vk_app_id => "id", :vk_app_password => "password" }
     c.vkontakte_merge_enabled true     # mapping user data from vkontakte to new user account, true by default
   end
- 
+
 * UserSession model:
- 
+
 By default "vkontakte_merge_enabled" uses "map_vkontakte_data" method:
 
   private
@@ -77,8 +77,8 @@ Put link somewhere, where you want:
 
 By default it uses action create of user_sessions controller. Parameters are identical link_to without block.
 
-== Contributing to aavkontakte
- 
+== Contributing to aavkontakte-rails3
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
