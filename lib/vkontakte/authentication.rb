@@ -28,21 +28,21 @@ module VkontakteAuthentication
       end
 
       # Auto registration
-      # def vkontakte_auto_registration(value = true)
-      #   rw_config(:vkontakte_auto_registration, value, true)
-      # end
-      # alias_method :vkontakte_auto_registration=, :vkontakte_auto_registration
-      # 
-      # def vkontakte_auto_registration_value(value = nil)
-      #   rw_config(:vkontakte_auto_registration, value, true)
-      # end
-      
+      def vkontakte_auto_registration(value = true)
+        rw_config(:vkontakte_auto_registration, value, true)
+      end
+      alias_method :vkontakte_auto_registration=, :vkontakte_auto_registration
+
+      def vkontakte_auto_registration_value(value = nil)
+        rw_config(:vkontakte_auto_registration, value, true)
+      end
+
       # Auto merge
       def vkontakte_merge_enabled(value = true)
         rw_config(:vkontakte_merge_enabled, value, true)
       end
       alias_method :vkontakte_merge_enabled=, :vkontakte_merge_enabled
-      
+
       def vkontakte_merge_enabled_value(value = nil)
         rw_config(:vkontakte_merge_enabled, value, true)
       end
@@ -59,6 +59,11 @@ module VkontakteAuthentication
       def vk_app_cookie
         rw_config(:vk_app_cookie, nil) || rw_config(:vk_app_cookie, "vk_app_#{vk_app_id}") if vk_app_id
       end
+
+      def vk_id_field(value = nil)
+        rw_config(:vk_id_field, value, :vk_id)
+      end
+      alias_method :vk_id_field=, :vk_id_field
     end
 
     module Methods

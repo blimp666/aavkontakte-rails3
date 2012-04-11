@@ -2,7 +2,6 @@ module VkontakteAuthentication
   module Session
     def self.included(klass)
       klass.class_eval do
-        extend Config
         include InstanceMethods
         validate :validate_by_vk_cookie, :if => :authenticating_with_vkontakte?
         before_destroy :destroy_vkontakte_cookies
@@ -10,18 +9,6 @@ module VkontakteAuthentication
     end
 
     class NotInitializedError < StandardError
-    end
-
-    module Config
-      def find_by_vk_id_method(value = nil)
-        rw_config(:find_by_vk_id_method, value, "find_by_vk_id")
-      end
-      alias_method :find_by_vk_id_method=, :find_by_vk_id_method
-
-      def vk_id_field(value = nil)
-        rw_config(:vk_id_field, value, :vk_id)
-      end
-      alias_method :vk_id_field=, :vk_id_field
     end
 
     module InstanceMethods
@@ -41,26 +28,27 @@ module VkontakteAuthentication
       def validate_by_vk_cookie
         @vkontakte_data  = controller.params[:user_session] if controller.params[:user_session]
         auth_data = CGI::parse(controller.cookies[record_class.vk_app_cookie])
+        auth_data.update(auth_data){|key| auth_data[key][0]}
         result = "expire=%smid=%ssecret=%ssid=%s%s" % [ auth_data['expire'], auth_data['mid'], auth_data['secret'], auth_data['sid'], record_class.vk_app_password ]
-        if MD5.md5(result).to_s == auth_data['sig'].to_s
-          raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.respond_to? find_by_vk_id_method
+        if Digest::MD5.hexdigest(result).to_s == auth_data['sig'].to_s
+          raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.attribute_names.include?(vk_id_field.to_s)
           if @vkontakte_data
-            self.attempted_record = klass.send(find_by_vk_id_method, @vkontakte_data[:mid])
+            self.attempted_record = klass.where(vk_id_field => @vkontakte_data[:mid].to_i).first
             if self.attempted_record.blank?
               # creating a new account
               self.new_registration = true
               self.attempted_record = record_class.new
-              self.attempted_record.send "#{vk_id_field}=", @vkontakte_data[:mid]
+              self.attempted_record.send "#{vk_id_field}=", @vkontakte_data[:mid].to_i
               self.attempted_record.send :persistence_token=, Authlogic::Random.hex_token if self.attempted_record.respond_to? :persistence_token=
               map_vkontakte_data if record_class.vkontakte_merge_enabled_value
               self.attempted_record.save_without_session_maintenance
-            elsif !record_class.vkontakte_auto_registration_value
+            elsif !(record_class.vkontakte_auto_registration_value)
               self.attempted_record = record_class.new
             end
           end
           return true
         else
-          errors.add_to_base("Authentication failed. Please try again.")
+          errors.add(vk_id_field, "Authentication failed. Please try again.")
           return false
         end
       end
@@ -76,13 +64,13 @@ module VkontakteAuthentication
       end
 
       def vk_id_field
-        self.class.vk_id_field
+        record_class.vk_id_field
       end
 
       def record_class
         self.class.klass
       end
-      
+
       def delete_cookie(key)
         return unless key
         domain = controller.request.domain

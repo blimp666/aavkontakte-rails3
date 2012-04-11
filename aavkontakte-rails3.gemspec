@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "aavkontakte-rails3.gemspec",
     "init.rb",
-    "lib/aavkontakte.rb",
+    "lib/aavkontakte-rails3.rb",
     "lib/vkontakte.js",
     "lib/vkontakte/authentication.rb",
     "lib/vkontakte/helper.rb",
