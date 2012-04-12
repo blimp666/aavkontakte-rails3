@@ -30,7 +30,8 @@ Gem::Specification.new do |s|
     "lib/vkontakte.js",
     "lib/vkontakte/authentication.rb",
     "lib/vkontakte/helper.rb",
-    "lib/vkontakte/session.rb"
+    "lib/vkontakte/session.rb",
+    "lib/vkontakte/auth_success.rb"
   ]
   s.homepage = %q{http://github.com/blimp666/aavkontakte-rails3}
   s.licenses = ["MIT"]

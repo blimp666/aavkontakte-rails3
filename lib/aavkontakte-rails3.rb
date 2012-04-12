@@ -2,6 +2,7 @@ require "digest/md5"
 require "vkontakte/authentication"
 require "vkontakte/session"
 require "vkontakte/helper"
+require "vkontakte/auth_success"
 
 # TODO: may be rake task..
 unless File.exists?("#{Rails.root}/public/assets/vkontakte.js")

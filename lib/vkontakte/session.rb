@@ -24,13 +24,13 @@ module VkontakteAuthentication
       def authenticating_with_vkontakte?
         record_class.vkontakte_enabled_value && controller.cookies[record_class.vk_app_cookie].present?
       end
-
+      
+      
       def validate_by_vk_cookie
         @vkontakte_data  = controller.params[:user_session] if controller.params[:user_session]
-        auth_data = CGI::parse(controller.cookies[record_class.vk_app_cookie])
-        auth_data.update(auth_data){|key| auth_data[key][0]}
-        result = "expire=%smid=%ssecret=%ssid=%s%s" % [ auth_data['expire'], auth_data['mid'], auth_data['secret'], auth_data['sid'], record_class.vk_app_password ]
-        if Digest::MD5.hexdigest(result).to_s == auth_data['sig'].to_s
+        if VkontakteAuthentication.auth_success?(record_class.vk_app_password,
+                                                 controller.cookies[record_class.vk_app_cookie], 
+                                                 @vkontakte_data[:mid]) 
           raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.attribute_names.include?(vk_id_field.to_s)
           if @vkontakte_data
             self.attempted_record = klass.where(vk_id_field => @vkontakte_data[:mid].to_i).first
