@@ -18,12 +18,16 @@ Jeweler::Tasks.new do |gem|
   gem.license = "MIT"
   gem.summary = %Q{Yet Another Authlogic Vkontakte Authorization}
   gem.description = %Q{Vkontakte authorization for authlogic with ruby 1.9 and rails 3.0}
-  gem.email = "mydeeptown@gmail.com"
-  gem.authors = ["Dmitry Vorotilin"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.email = "nowhere@gmail.com"
+  gem.authors = ["blimp666"]
+
+  gem.files.include 'lib/aavkontakte-rails3.rb'
+  gem.files.include 'lib/vkontakte.js'
+  gem.files.include 'lib/vkontakte/authentication.rb'
+  gem.files.include 'lib/vkontakte/session.rb'
+  gem.files.include 'lib/vkontakte/helper.rb'
+  gem.files.include 'lib/vkontakte/auth_success.rb'
+
 end
 Jeweler::RubygemsDotOrgTasks.new
 
