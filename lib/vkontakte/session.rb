@@ -27,18 +27,18 @@ module VkontakteAuthentication
 
 
       def validate_by_vk_cookie
-        p 'AA_VK DEBUG'
-        p 'controller.params'
-        p controller.params
+        p '0. AA_VK DEBUG'
+        p '1. controller.params'
+        p "2. #{controller.params}"
         @vkontakte_data  = controller.params[:user_session] if controller.params and controller.params[:user_session]
-        p 'vk_data'
-        p @vkontakte_data
-        p 'controller.cookies'
-        p controller.cookies
-        p 'record_class.vk_app_cookie'
-        p record_class.vk_app_cookie
-        p 'controller.cookies[record_class.vk_app_cookie]'
-        p controller.cookies[record_class.vk_app_cookie]
+        p '3. vk_data'
+        p "4. #{@vkontakte_data}"
+        p '5. controller.cookies'
+        p "6. #{controller.cookies}"
+        p '7. record_class.vk_app_cookie'
+        p "8. #{record_class.vk_app_cookie}"
+        p '9. controller.cookies[record_class.vk_app_cookie]'
+        p "10. #{controller.cookies[record_class.vk_app_cookie]}"
         if VkontakteAuthentication.auth_success?(record_class.vk_app_password,
                                                  controller.cookies[record_class.vk_app_cookie],
                                                  @vkontakte_data[:mid])
