@@ -24,13 +24,20 @@ module VkontakteAuthentication
       def authenticating_with_vkontakte?
         record_class.vkontakte_enabled_value && controller.cookies[record_class.vk_app_cookie].present?
       end
-      
-      
+
+
       def validate_by_vk_cookie
-        @vkontakte_data  = controller.params[:user_session] if controller.params[:user_session]
+        p 'AA_VK DEBUG'
+        p 'params'
+        p controller.params
+        p 'cookies'
+        p controller.cookies
+        @vkontakte_data  = controller.params[:user_session] if controller.params and controller.params[:user_session]
+        p 'vk_data'
+        p @vkontakte_data
         if VkontakteAuthentication.auth_success?(record_class.vk_app_password,
-                                                 controller.cookies[record_class.vk_app_cookie], 
-                                                 @vkontakte_data[:mid]) 
+                                                 controller.cookies[record_class.vk_app_cookie],
+                                                 @vkontakte_data[:mid])
           raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.attribute_names.include?(vk_id_field.to_s)
           if @vkontakte_data
             self.attempted_record = klass.where(vk_id_field => @vkontakte_data[:mid].to_i).first
