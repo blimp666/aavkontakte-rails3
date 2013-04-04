@@ -45,14 +45,19 @@ module VkontakteAuthentication
           raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.attribute_names.include?(vk_id_field.to_s)
           if @vkontakte_data
             self.attempted_record = klass.where(vk_id_field => @vkontakte_data[:mid].to_i).first
+            # p self.attempted_record
+#            self.attempted_record = $current_session.user if self.attempted_record.blank? and $current_session
+            self.attempted_record = controller.saved_current_session.user if self.attempted_record.blank? and controller.saved_current_session
+            # p $current_session
             if self.attempted_record.blank?
               # creating a new account
               self.new_registration = true
               self.attempted_record = record_class.new
               self.attempted_record.send "#{vk_id_field}=", @vkontakte_data[:mid].to_i
               self.attempted_record.send :persistence_token=, Authlogic::Random.hex_token if self.attempted_record.respond_to? :persistence_token=
-              map_vkontakte_data if record_class.vkontakte_merge_enabled_value
-              self.attempted_record.save_without_session_maintenance
+#              map_vkontakte_data if record_class.vkontakte_merge_enabled_value
+#              self.attempted_record.save_without_session_maintenance
+              nil
             elsif !(record_class.vkontakte_auto_registration_value)
               self.attempted_record = record_class.new
             end
