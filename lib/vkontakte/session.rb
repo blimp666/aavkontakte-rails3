@@ -25,30 +25,17 @@ module VkontakteAuthentication
         record_class.vkontakte_enabled_value && controller.cookies[record_class.vk_app_cookie].present?
       end
 
-
       def validate_by_vk_cookie
-        # p '0. AA_VK DEBUG'
-        # p '1. controller.params'
-        # p "2. #{controller.params}"
         @vkontakte_data  = controller.params[:user_session] if controller.params and controller.params[:user_session]
-        # p '3. vk_data'
-        # p "4. #{@vkontakte_data}"
-        # p '5. controller.cookies'
-        # p "6. #{controller.cookies}"
-        # p '7. record_class.vk_app_cookie'
-        # p "8. #{record_class.vk_app_cookie}"
-        # p '9. controller.cookies[record_class.vk_app_cookie]'
-        # p "10. #{controller.cookies[record_class.vk_app_cookie]}"
+        vk_mid = @vkontakte_data ? @vkontakte_data[:mid] : nil
         if VkontakteAuthentication.auth_success?(record_class.vk_app_password,
                                                  controller.cookies[record_class.vk_app_cookie],
-                                                 @vkontakte_data[:mid])
+                                                 vk_mid)
           raise(NotInitializedError, "You must define vk_id column in your User model") unless record_class.attribute_names.include?(vk_id_field.to_s)
           if @vkontakte_data
             self.attempted_record = klass.where(vk_id_field => @vkontakte_data[:mid].to_i).first
-            # p self.attempted_record
 #            self.attempted_record = $current_session.user if self.attempted_record.blank? and $current_session
             self.attempted_record = controller.saved_current_session.user if self.attempted_record.blank? and controller.saved_current_session
-            # p $current_session
             if self.attempted_record.blank?
               # creating a new account
               self.new_registration = true
